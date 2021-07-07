@@ -1,0 +1,63 @@
+version: '3' # specify docker-compose version
+
+services:
+  angular: # name of the first service
+    image: node
+    # build:  # specify the directory of the Dockerfile
+    #     context: ./env_frontend
+    #     dockerfile: Dockerfile
+    volumes:
+        - ./frontend:/home/node/app  # maps frontend folder to container app folder
+    working_dir: /home/node/app
+    command: "node_modules/.bin/ng serve --host 0.0.0.0"
+    ports:
+    #   - "81:4200" # maps port 81 on localhost to port in container
+      - "127.0.0.1:81:4200" # do not expose developement server to LAN
+    networks:
+      - mynetwork
+    depends_on:
+      - "nestjs"
+
+  nestjs: # name of the second service
+    image: node
+    # build:  # specify the directory of the Dockerfile
+    #   context: ./env_backend
+    #   dockerfile: Dockerfile
+    volumes:
+        - ./backend:/home/node/app  # maps backend folder to container app folder
+    working_dir: /home/node/app
+    command: "npm run start"
+    ports:
+    #   - "82:3000" # maps port 82 on localhost to port in container
+      - "127.0.0.1:82:3000" # do not expose developement server to LAN
+    networks:
+      - mynetwork
+    depends_on:
+    - "postgres"
+
+# Use postgres/example user/password credentials
+  postgres:
+    image: postgres
+    # build:  # specify the directory of the Dockerfile
+    #   context: ./env_postgres
+    #   dockerfile: Dockerfile
+    env_file: ./env_postgres/postgres.env
+    restart: always
+    networks:
+        - mynetwork
+    # ports:
+    #   - 127.0.0.1:5432:5432
+
+  adminer:
+    image: adminer
+    # build:
+    #   context: ./env_adminer
+    #   dockerfile: Dockerfile
+    ports:
+    #   - 83:8080
+      - 127.0.0.1:83:8080 # do not expose developement server to LAN
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

@@ -1,0 +1,62 @@
+
+# Postgres db
+/env_postgres/postgres.env
+
+# nestJS backend compiled output
+/backend/dist
+/backend/node_modules
+
+# backend Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# backend Tests
+/backend/coverage
+/backend/.nyc_output
+
+# frontend misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# Angular frontend compiled output
+/frontend/dist
+/frontend/tmp
+/frontend/out-tsc
+# Only exists if Bazel was run
+/frontend/bazel-out
+
+# frontend dependencies
+/frontend/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
